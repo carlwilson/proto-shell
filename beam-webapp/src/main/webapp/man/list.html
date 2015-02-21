@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<!--                                                               -->
+		<!-- Consider inlining CSS to reduce the number of requested files -->
+		<!--                                                               -->
+		<link type="text/css" rel="stylesheet" href="/css/beam.css">
+		
+		<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+		<script type="text/javascript" src="/scripts/beam.js"></script>
+		<script type="text/javascript">
+			// Catch the file input change event
+		 	function displayManifestList() {
+		 		$('#manifests').empty(); // Clear the collections list
+				
+		 		// Call the collections service
+				$.get('/beam/services/manifests',
+					function(data) {
+						for (var i = 0; i < data.length; i++) {
+							var beamManifest = data[i];
+							$('<li><div class="item"><label>'
+									+ beamManifest.root
+									+ '</label><span class="small">'
+									+ beamManifest.creator.name
+									+ '</span><span class="small"><strong>'
+									+ beamManifest.manifest.entryTuples.length + " items, "
+									+ bytesToSize(beamManifest.manifest.totalSize)
+									+ '</strong></span></div></li>')
+								.attr({id: beamManifest.id})
+								.click( // onclick take us to the collection page
+								function() {
+									window.location = '/man/view.html?id=' + $(this).attr('id');
+								})
+								.appendTo($('#manifests')); // append list item to the collections list
+
+						}
+					});
+		 	}
+			// When document is ready
+			$(document).ready(function(){
+				getNavbar('man-nav');
+				displayManifestList(); // List the manifests
+			});
+		</script>
+	    <title>BEAM Web application</title>
+	</head>
+	<body>
+		<div id="container">
+			<div id="topbar">
+				<h1>Manifests</h1>
+			</div>
+			<div id="navbar">
+			</div>
+			<div class="main">
+				<div class="spacer"></div>
+				<div class="select-list">
+					<div class="list-heading">
+						<h3>Select a Manifest to Check</h3>
+					</div>
+					<ul id="manifests"></ul>
+				</div>
+				<div class="spacer"></div>
+				<a id="add" href="/man/add.html">Create Manifest</a>
+				<div class="spacer"></div>
+			</div>
+			<div id="footer"></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,5 @@
+2012-09-12 15:07:33,441 [main] INFO  uk.ac.ox.bodleian.beam.AuditWorkflow - BEAM Processing v.0.3.5-SNAPSHOT
+2012-09-12 15:07:51,116 [main] INFO  uk.ac.ox.bodleian.beam.AuditWorkflow - BEAM Processing v.0.3.5-SNAPSHOT
+2012-09-12 15:08:14,576 [main] INFO  uk.ac.ox.bodleian.beam.AuditWorkflow - BEAM Processing v.0.3.5-SNAPSHOT
+2012-09-12 15:08:15,106 [main] INFO  uk.ac.ox.bodleian.beam.AuditWorkflow - Found 1 collections.
+2012-09-12 15:08:15,106 [main] INFO  uk.ac.ox.bodleian.beam.AuditWorkflow - Assessing collection 1: opfcoll

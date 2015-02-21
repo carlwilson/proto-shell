@@ -1,0 +1,21 @@
+http:
+    # the root path to the REST resources
+    rootPath: /beam/*
+
+# the host for the mongo
+mongohost: localhost
+# the port for mong
+mongoport: 27017
+# the mongo database
+mongodb: beamdb
+
+# Database settings.
+database:
+  # the name of your JDBC driver
+  driverClass: org.h2.Driver
+  # the username
+  user: sa
+  # the password
+  password: sa
+  # the JDBC URL
+  url: jdbc:h2:mem:test

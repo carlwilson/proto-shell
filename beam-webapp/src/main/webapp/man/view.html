@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		
+		<!--                                                               -->
+		<!-- Consider inlining CSS to reduce the number of requested files -->
+		<!--                                                               -->
+		<link type="text/css" rel="stylesheet" href="/css/beam.css">
+		<link type="text/css" rel="stylesheet" href="/css/entries.css">
+		<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+		<script type="text/javascript" src="/scripts/beam.js"></script>
+		<script type="text/javascript">
+		function getManifest() {
+			var collid = $.getUrlVar('id');
+			$.get('/beam/services/manifests/id/' + collid ,
+				function(beamManifest) {
+					$('#root').text(beamManifest.root);
+					$('#creator').text(beamManifest.creator.name);
+					$('#created').text(formatDate(new Date(beamManifest.dateCreated)));
+					$('#checked').text(formatDate(new Date(beamManifest.dateChecked)));
+					$('#size').text(bytesToSize(beamManifest.manifest.totalSize));
+					$('#entry-count').text(beamManifest.manifest.entryTuples.length);
+					var entryTuples = beamManifest.manifest.entryTuples;
+					for (var i = 0; i < entryTuples.length; i++) {
+						var entryTuple = entryTuples[i];
+						$('<li><div class="entry"><div class="entry-head"><label>'
+								+ entryTuple.entry.name
+								+ '</label></div><span class="small">Size: '
+								+ bytesToSize(entryTuple.byteStreamId.length)
+								+ '</span><span class="small">Modified: '
+ 								+ formatDate(new Date(entryTuple.entry.modifiedTime))
+								+ '</span><span class="small">Status: '
+								+ entryTuple.entry.status
+								+ '</span><br/><span class="small">SHA256: '
+ 								+ entryTuple.byteStreamId.hexSHA256
+								+ '</span></div></li>')
+							.appendTo($('#entries')); // append list item to the collections list
+					}
+				});
+		}
+
+		// document ready
+		$(document).ready(
+			function() {
+				getManifest();
+				getNavbar('man-nav');
+			}
+		);
+		</script>
+		<title>BEAM Web application</title>
+	</head>
+	<body>
+		<div id="container">
+			<div id="topbar">
+				<h1>Manifests</h1>
+			</div>
+			<div id="navbar">
+			</div>
+			<div class="main">
+				<div class="spacer"></div>
+				<div class="entries-list">
+					<div class="details">
+						<div>
+						<label class="head">Root:</label>
+						<span id="root"></span>
+						</div>
+						<div>
+						<label class="head">Creator:</label>
+						<span id="creator"></span>
+						</div>
+						<div>
+						<label class="head">Created:</label>
+						<span id="created"></span>
+						</div>
+						<div>
+						<label class="head">Checked:</label>
+						<span id="checked"></span>
+						</div>
+						<div>
+						<label class="head">Size:</label>
+						<span id="size"></span>
+						</div>
+						<div>
+						<label class="head">Entries:</label>
+						<span id="entry-count"></span>
+						</div>
+					</div>
+					<ul id="entries"></ul>
+				</div>
+				<div class="spacer"></div>
+			</div>
+		</div>
+		<div class="modal" id="prompt">
+ 			<div id="message" class="bord">
+    			<h2>Manifest</h2>
+   				<div class="spacer"></div>
+    			<p></p>
+    			<p>Click the Close button or hit ESC to close.</p>
+   				<div class="spacer"></div>
+   				<button class="close">Close</button>
+   				<div class="spacer"></div>
+  			</div>
+		</div>
+	</body>
+</html>

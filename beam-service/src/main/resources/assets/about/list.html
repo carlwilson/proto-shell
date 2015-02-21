@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!--                                                               -->
+<!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
+<link type="text/css" rel="stylesheet" href="/css/reset.css">
+<link type="text/css" rel="stylesheet" href="/css/text.css">
+<link type="text/css" rel="stylesheet" href="/css/960_12_col.css">
+<link type="text/css" rel="stylesheet" href="/css/beam.css">
+<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+<script type="text/javascript" src="/scripts/beam-common.js"></script>
+<script type="text/javascript">
+	// When the doc is loaded populate the session panel
+	$(document).ready(function() {
+		$.get('/beam/session', function(response) {
+			$('#detail').html(response);
+		}, "html");			
+	});
+</script>
+<title>BEAM Web application</title>
+</head>
+<body>
+  <div id="header" class="container_12">
+    <h1>Beam Asset Management</h1>
+    <ul id="navbar">
+      <li><a id="home-nav" class="grid_2" href="/home.html"
+        title="An Overview of Functionality.">Home</a></li>
+      <li><a id="coll-nav" class="grid_2" href="/collections/list.html" title="Create and Manage BEAM Collections.">Collections</a></li>
+      <li><a id="man-nav" class="grid_2" href="/manifests/list.html" title="Create and Manage BEAM Manifests.">Manifests</a></li>
+      <li><a id="tool-nav" class="grid_2" href="/tools/list.html" title="Configure and Test BEAM Tools.">Tools</a></li>
+      <li><a id="conf-nav" class="grid_2" href="/configuration/list.html" title="Configure the BEAM Application.">Configuration</a></li>
+      <li><a id="about-nav" class="grid_2 select" href="/about/list.html"
+        title="Application & Environment Information.">About</a></li>
+    </ul>
+  </div>
+  <div id="content" class="container_12">
+    <div class="clear"></div>
+    <div id="detail" class="grid_8 alpha">
+    </div>
+    <div id="summary" class="grid_4 omega">
+      <h3>What's this for?</h3>
+      <p>This information is useful for reporting faults, it lists:</p>
+      <ul>
+        <li>The account name of the JVM.</li>
+        <li>The host name and IP address of the server.</li>
+        <li>The operating system name and version.</li>
+        <li>The details of the JVM version.</li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer" class="container_12"></div>
+</div>
+</body>
+</html>

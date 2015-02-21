@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<!--                                                               -->
+		<!-- Consider inlining CSS to reduce the number of requested files -->
+		<!--                                                               -->
+		<link type="text/css" rel="stylesheet" href="/css/beam.css">
+		
+		<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+		<script type="text/javascript" src="/scripts/beam.js"></script>
+		<script type="text/javascript">
+			// Catch the file input change event
+			function displayEnvironment() {
+				$.get('/beam/services/sys/env',
+					function(data) {
+ 						$(data).find('user').each(
+ 							function() {
+ 								$('#name').val($(this).find("name").text());
+								$('#lang').val($(this).find("country").text() + "/" + $(this).find("language").text());
+							});
+ 						$(data).find('hardware').each(
+ 	 							function() {
+ 	 								$('#host').val($(this).find("hostName").text() + " [" + $(this).find("ipAddress").text() + "]");
+ 									$('#mach').val($(this).find("machAddress").text());
+ 								});
+ 						$(data).find('os').each(
+ 	 							function() {
+ 	 								$('#os').val($(this).find("name").text() + " v." + $(this).find("version").text() + " " + $(this).find("architecture").text());
+ 								});
+ 						$(data).find('java').each(
+ 	 							function() {
+ 	 								$('#jvm').val($(this).find("vendor").text() + " v." + $(this).find("version").text() + $(this).find("architecture").text());
+ 								});
+					});
+			}
+			
+			// Bind event handler to file selector on dom ready
+			$(document).ready(function(){
+				getNavbar('about-nav');
+				displayEnvironment();
+			});
+		</script>
+  	    <title>BEAM Web application</title>
+	</head>
+	<body>
+		<div id="container">
+			<div id="topbar">
+				<h1 id="heading">About</h1>
+			</div>
+			<nav id="navbar">
+			</nav>
+			<div class="main">
+				<div class="spacer"></div>
+				<div id="stylized" class="beamform">
+					<form id="envForm" name="envForm">
+						<h3>Current Environment</h3>
+						<p>Details below are gathered from the JVM.</p>
+						<fieldset>
+							<legend>User Details</legend>
+							<label for="name">Name
+							<span class="small">Account name</span>
+							</label>
+							<input type="text" id="name" name="name" disabled />
+							<label for="lang">Language
+							<span class="small">Country & language</span>
+							</label>
+							<input	type="text" id="lang" name="lang" disabled />
+						</fieldset>
+						<fieldset>
+							<legend>Hardware Details</legend>
+							<label for="host">Host
+							<span class="small">Name & IP</span>
+							</label>
+							<input type="text" id="host" name="host" disabled />
+							<label for="mach">MACH
+							<span class="small">MACH Address</span>
+							</label>
+							<input	type="text" id="mach" name="mach" disabled />
+						</fieldset>
+						<fieldset>
+							<legend>JVM Details</legend>
+							<label for="os">OS
+							<span class="small">Operating System</span>
+							</label>
+							<input type="text" id="os" name="os" disabled />
+							<label for="jvm">JVM
+							<span class="small">Java Details</span>
+							</label>
+							<input	type="text" id="jvm" name="jvm" disabled />
+						</fieldset>
+					</form>
+				</div>
+				<div class="spacer"></div>
+			</div>
+			<div id="footer">
+			</div>
+		</div>
+	</body>
+</html>

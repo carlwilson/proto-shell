@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<!--                                                               -->
+		<!-- Consider inlining CSS to reduce the number of requested files -->
+		<!--                                                               -->
+		<link type="text/css" rel="stylesheet" href="/css/beam.css">
+		
+		<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+		<script type="text/javascript" src="/scripts/beam.js"></script>
+		<script type="text/javascript">
+			// Catch the file input change event
+		 	function getCollections() {
+		 		$('#collections').empty(); // Clear the collections div
+				
+		 		// Call the collections service
+				$.get('/beam/services/collections',
+					function(data) { // parse the returned data as XML
+						$(data).find("beamCollection").each( // for each collection element
+							function() { // Create a list item describing the collection
+								$('<li><div class="item"><label>'
+										+ $(this).children("name").text()
+										+ '</label><span class="small">'
+										+ $(this).children("title").text()
+										+ '</span><span class="small"><strong>'
+										+ (($(this).children("available").text() == "true") ? "online" : "offline")
+										+ '</strong></span></div></li>')
+									.attr({id: $(this).find("id").text()})
+									.click( // onclick take us to the collection page
+									function() {
+										window.location = '/coll/view.html?id=' + $(this).attr('id');
+									})
+									.appendTo($('#collections')); // append list item to the collections list
+						});
+					});
+		 	}
+			// When document is ready
+			$(document).ready(function(){
+				getNavbar('coll-nav');
+				getCollections(); // Fill in the collections
+			});
+		</script>
+	    <title>BEAM Web application</title>
+	</head>
+	<body>
+		<div id="container">
+			<div id="topbar">
+				<h1>Collections</h1>
+			</div>
+			<div id="navbar">
+			</div>
+			<div class="main">
+				<div class="spacer"></div>
+				<div class="select-list">
+					<div class="list-heading">
+						<h3>Select a Collection to View</h3>
+					</div>
+					<ul id="collections"></ul>
+				</div>
+				<div class="spacer"></div>
+				<a id="add" href="/coll/add.html">Create Collection</a>
+				<div class="spacer"></div>
+			</div>
+			<div id="footer"></div>
+		</div>
+	</body>
+</html>

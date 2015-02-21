@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="/css/beam.css">
+
+	<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+	<script type="text/javascript" src="/scripts/beam.js"></script>
+	<script type="text/javascript">
+		function getCollection() {
+			var collid = $.getUrlVar('id');
+			$.get('/beam/services/collections/id/' + collid ,
+				function(data) {
+					$(data).find("beamCollection").each(
+							function() {
+								var created = new Date($(this).children('created').text());
+								$('#name').val($(this).children('name').text());
+								$('#title').val($(this).children('title').text());
+								$('#root').val($(this).children('root').text());
+								$('#created').val(formatDate(created) + ', by ' + $(this).find('creator').children('name').text());
+							});
+				});
+			$('#add-acc').click(function() {window.location = "/coll/acc/add.html?collid=" + collid});
+		}
+		
+		// Bind event handler to file selector on dom ready
+		$(document).ready(function(){
+			getNavbar('coll-nav');
+			getCollection();
+		});
+	</script>
+    	<title>BEAM Web application</title>
+	</head>
+
+	<body>
+		<div id="container">
+			<div id="topbar"><h1>Manage Collection</h1></div>
+			<div id="navbar">
+			</div>
+			<div class="main">
+				<div class="spacer"></div>
+				<div id="stylized" class="beamform">
+					<form id="form" name="form">
+						<h3>Collection details</h3>
+						<p>Manage this collection.</p>
+						<label for="name">Name
+						<span class="small">Collection name</span>
+						</label>
+						<input type="text" id="name" name="name" disabled required maxlength="30" />
+						<label for="title">Title
+						<span class="small">Collection title</span>
+						</label>
+						<input	type="text" id="title" name="title" disabled required maxlength="255" />
+						<label for="root">Root Dir
+						<span class="small">Path to root</span>
+						</label>
+						<input	type="text" id="root" name="root" disabled required maxlength="255" />
+						<label for="created">Created
+						<span class="small">Date & user</span>
+						</label>
+						<input	type="text" id="created" name="created" disabled required maxlength="255" />
+						<button type="button" id="add-acc">Manage Accessions</button>
+					</form>
+				</div>
+				<div class="spacer"></div>
+    		</div>
+   		</div>
+	</body>
+</html>

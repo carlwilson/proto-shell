@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>uk.ac.ox.bodleian.beam</groupId>
+    <artifactId>spruce-beam</artifactId>
+    <version>0.3.5-SNAPSHOT</version>
+  </parent>
+  <artifactId>beam-webapp</artifactId>
+  <packaging>war</packaging>
+  <name>BEAM web application</name>
+  <properties>
+	<jersey.version>1.14</jersey.version>
+    <jettyVersion>8.1.7.v20120910</jettyVersion>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <!-- This plugin is needed for the servlet example -->
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>${jettyVersion}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution><goals><goal>java</goal></goals></execution>
+        </executions>
+      </plugin>
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<configuration>
+			<descriptorRefs>
+				<descriptorRef>jar-with-dependencies</descriptorRef>
+			</descriptorRefs>
+			<archive>
+				<manifest>
+					<addClasspath>true</addClasspath>
+					<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+					<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+				</manifest>
+			</archive>
+		</configuration>
+		<executions>
+			<execution>
+				<id>make-assembly</id> <!-- this is used for inheritance merges -->
+				<phase>package</phase> <!-- bind to the packaging phase -->
+				<goals>
+					<goal>single</goal>
+				</goals>
+			</execution>
+		</executions>
+	  </plugin>
+	  </plugins>
+    </build>
+	  <dependencies>
+		<dependency>
+			<groupId>uk.ac.ox.bodleian.beam</groupId>
+			<artifactId>beam-filesystems</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.ac.ox.bodleian.beam</groupId>
+			<artifactId>beam-utilities</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+			    <dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-servlet</artifactId>
+			<version>${jersey.version}</version>
+			<scope>compile</scope>
+		</dependency>
+ 		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+   		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>${jersey.version}</version>
+			<scope>compile</scope>
+		</dependency>
+<!-- 	   <dependency> -->
+<!-- 	     <groupId>com.fasterxml.jackson.core</groupId> -->
+<!-- 	     <artifactId>jackson-core</artifactId> -->
+<!-- 		  <version>${jacksonVersion}</version> -->
+<!-- 	   </dependency> -->
+<!-- 		<dependency> -->
+<!-- 		  <groupId>com.fasterxml.jackson.core</groupId> -->
+<!-- 		  <artifactId>jackson-annotations</artifactId> -->
+<!-- 		  <version>${jacksonVersion}</version> -->
+<!-- 		</dependency> -->
+<!-- 	   <dependency> -->
+<!-- 	     <groupId>com.fasterxml.jackson.core</groupId> -->
+<!-- 	     <artifactId>jackson-databind</artifactId> -->
+<!-- 		  <version>${jacksonVersion}</version> -->
+<!-- 	   </dependency> -->
+   				<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<version>8.1.0.RC0</version>
+			<type>maven-plugin</type>
+		</dependency>
+	</dependencies>
+</project>

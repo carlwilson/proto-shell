@@ -1,0 +1,155 @@
+body {
+	background-color: #fff;
+}
+
+#main div {
+	background-color: #fff;
+	color: #3b5998;
+}
+
+#header,#banner {
+	background-color: #3b5998;
+	color: #fff;
+}
+
+#content {
+	color: #3b5998;
+	background-color: #fff;
+}
+
+#footer {
+	margin-top: 20px;
+}
+/* ------- Anchor Buttons ---------- */
+a,button {
+	display: block;
+	clear: both;
+	border: 1px solid #3b5998;
+	background: #3b5998;
+	text-align: center;
+	color: #fff;
+	line-height: 30px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover,button:hover {
+	text-decoration: none;
+	background-color: #fcffad;
+	color: #3b5998;
+	cursor: pointer;
+}
+
+/* ----------- Nav bar list ----------- */
+#navbar ul {
+	margin-bottom: 0px;
+	list-style: none;
+}
+
+#navbar li {
+	background-color: #dfe3ee;
+	float: left;
+}
+
+#navbar li.select {
+	background-color: #3b5998;
+}
+
+#navbar a {
+	border: 0px;
+	margin: 0px;
+	padding: 0px 10px;
+	background-color: #dfe3ee;
+	color: #3b5998;
+}
+
+#navbar a:hover {
+	background-color: #fcffad;
+	color: #3b5998;
+}
+
+#navbar a.select {
+	background-color: #3b5998;
+	color: #fff;
+}
+/* ----------- stylized ----------- */
+.stylized {
+	text-align: centre;
+}
+
+span,p {
+	color: #3b5998;
+	display: block;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+label,legend {
+	display: block;
+	font-weight: bold;
+}
+
+.stylized label {
+	text-align: right;
+	float: left;
+}
+
+.stylized .small {
+	text-align: right;
+}
+
+.stylized input {
+	float: left;
+	padding: 4px 2px;
+	margin: 2px 0 20px 10px;
+}
+
+.stylized button.out {
+	margin-left: auto;
+	margin-top: 15px;
+}
+
+ul.stylized {
+	list-style: none;
+}
+
+ul.stylized .small,ul.stylized label {
+	text-align: left;
+}
+
+ul.select li {
+	border-bottom: 1px solid #8b9dc3;
+}
+
+ul.select li:hover,ul.select label:hover,ul.select span:hover {
+	cursor: pointer;
+	background-color: #FCFFAD;
+}
+
+.modal {
+	display: none;
+	border: 10px solid #666;
+	border: 10px solid rgba(82, 82, 82, 0.698);
+	border-radius: 8px;
+}
+
+.modal div.bord {
+	background-color: #fff;
+}
+
+.modal h2 {
+	background: #3b5998;
+	color: #fff;
+}
+
+.progressbar {
+	background-color: #fff;
+	padding: 3px;
+}
+
+.progressbar div {
+	background-color: #3b5998;
+	width: 0%;
+	height: 20px;
+}
+​

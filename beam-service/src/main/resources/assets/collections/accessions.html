@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!--                                                               -->
+<!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
+<link type="text/css" rel="stylesheet" href="/css/reset.css">
+<link type="text/css" rel="stylesheet" href="/css/text.css">
+<link type="text/css" rel="stylesheet" href="/css/960_12_col.css">
+<link type="text/css" rel="stylesheet" href="/css/beam.css">
+<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+<script type="text/javascript" src="/scripts/beam-common.js"></script>
+<script type="text/javascript" src="/scripts/beam-data.js"></script>
+<script type="text/javascript">
+var collection;
+var newAccessions;
+
+function manifestPath(accession) {
+	return collection.root + accession.details.relativePath + "/accessiondata";
+}
+
+function summariseCollection() {
+	$('#summary').empty();
+	$('<h3>'
+		+ collection.details.name
+		+ '</h3><label class="grid_4">Root:<span>'
+		+ collection.root
+		+ '</span></label><label class="grid_4">Accessions:<span>'
+		+ collection.accessions.length
+		+ '</span></label>').appendTo('#summary');
+	}
+
+  function scanAccession(accession) {
+  	$('#summary').empty();
+  	$.get('/beam/manifests/entry/' + encodeURIComponent(manifestPath(accession)),
+  		function(response) {
+	  	  	$('#summary').empty();
+    	  	$('<h3>'
+    	    		+ accession.details.name
+    	    		+ '</h3><label class="grid_4">Root: <span>'
+    	    		+ accession.details.relativePath
+    	    		+ '</span></label>').appendTo('#summary');
+  				var manifest = response;
+  				$('<label class="grid_4">Items: <span>'
+  						+ manifest.entries.length
+  						+ ' files.</span></label><label class="grid_4">Size: <span>'
+  						+ bytesToSize(manifest.totalSize)
+  						+ '.</span></label><p class="grid_4">Press the button below to integrity check the accession, this may take some time.</p>').appendTo('#summary');
+  				$('<button>Check Accession</button>').click(function() {checkAccession(accession)}).appendTo('#summary');
+  		}, "json" );
+  	$('<h3>Scanning Accession</h3><p>Please wait...</p>').appendTo('#summary');
+  }
+
+  function checkAccession(accession) {
+		$.ajax(	{url : '/beam/manifests/cache/' + encodeURIComponent(manifestPath(accession)), 
+			 type : "PUT", // POST request
+			 statusCode : { // Map the status codes expected
+				404 : function(xhr, txtStts, errThrwn) { // 404 == root
+														// dir doesn't
+					alert("404 Problem - root directory for collection not found.");
+				}},
+			 success : function(data, status, jqXhr) {
+				 	var url = jqXhr.getResponseHeader('Content-Location');
+				 	setTimeout(function() {pollProgress(url);}, 5000);
+			 	}
+		});
+  }
+  
+  function pollProgress(url) {
+	  $.get(url,	function(response) {
+	  		var reporter = response;
+	  	  	$('#summary').empty();
+    	  	$('<h3>Checking Accession</h3><label class="grid_4">Completed: <span>'
+    	    		+ bytesToSize(reporter.processedCount) + '/' + bytesToSize(reporter.totalCount)
+    	    		+ '</span></label><label class="grid_4">Percentage: <span>'
+    	    		+ (reporter.percentage * 100).toFixed(2)
+    	    		+ '%</span></label><label class="grid_4">Estimated: <span>'
+    	    		+ formatDate(new Date(reporter.estimatedDate))
+    	    		+ '</span></label>').appendTo('#summary');
+	  		if (reporter.manifest == null) {
+			 	setTimeout(function() {pollProgress(url);}, 5000);
+	  		}
+	  });
+  }
+	
+	
+	function assessAccessions() {
+		$.get('/beam/accessions/scan/' + encodeURIComponent(collection.root), function(accJson) {
+			newAccessions = filterArray(accJson, collection.accessions);
+			$(newAccessions).each(function(index, accession) {
+				$('<li class="grid_7"><label>Name:<span>'
+					+ accession.details.name
+					+ '</span></label></li>')
+					.attr("id", collection.root)
+					.click(function(item) {
+						scanAccession(newAccessions[index]);
+					}).appendTo('#main-list');
+			});
+		}, "json").error(function() {
+ 			alert("404: directory not found.");
+		});
+	}
+
+  // When the doc is loaded, add click to the navbar
+  $(document).ready(function() {
+    // get the root param
+    var root = $.getUrlVar('root');
+    $.get('/beam/collections/' + root, function(collJson) {
+    		collection = collJson
+    		summariseCollection();
+    		assessAccessions();
+    	}, "json").error(function() {
+      // We can't find the collection
+      alert("404: collection root:" + root + " not found");
+      });
+  	setupOverlay();
+  });
+</script>
+
+<title>BEAM Web application</title>
+</head>
+<body>
+  <div id="header" class="container_12">
+    <h1>Beam Asset Management</h1>
+    <ul id="navbar">
+      <li><a id="home-nav" class="grid_2" href="/home.html"
+        title="An Overview of Functionality.">Home</a></li>
+      <li><a id="coll-nav" class="grid_2 select"
+        href="/collections/list.html"
+        title="Create and Manage BEAM Collections.">Collections</a></li>
+      <li><a id="man-nav" class="grid_2" href="/manifests/list.html"
+        title="Create and Manage BEAM Manifests.">Manifests</a></li>
+      <li><a id="tool-nav" class="grid_2" href="/tools/list.html"
+        title="Configure and Test BEAM Tools.">Tools</a></li>
+      <li><a id="conf-nav" class="grid_2" href="/configuration/list.html"
+        title="Configure the BEAM Application.">Configuration</a></li>
+      <li><a id="about-nav" class="grid_2" href="/about/list.html"
+        title="Application & Environment Information.">About</a></li>
+    </ul>
+  </div>
+  <div id="content" class="container_12">
+    <div class="clear"></div>
+    <div id="detail" class="grid_8 alpha">
+      <h3>New Accessions</h3>
+      <p>Click on an accession to scan and add it to the collection.</p>
+      <ul id="main-list"></ul>
+    </div>
+    <div id="summary" class="grid_4 omega">
+    </div>
+  </div>
+  <div id="footer" class="container_12"></div>
+  <div class="modal" id="prompt">
+    <div id="message" class="bord">
+      <h2>Collection Problem</h2>
+      <div class="spacer"></div>
+      <p></p>
+      <p>Click the Close button or hit ESC to close.</p>
+      <div class="spacer"></div>
+      <button class="close">Close</button>
+      <div class="spacer"></div>
+    </div>
+  </div>
+</body>
+</html>

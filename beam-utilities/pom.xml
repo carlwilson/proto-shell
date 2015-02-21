@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>uk.ac.ox.bodleian.beam</groupId>
+		<artifactId>spruce-beam</artifactId>
+		<version>0.3.5-SNAPSHOT</version>
+	</parent>
+	<artifactId>beam-utilities</artifactId>
+	<name>SPRUCE-BEAM Utilities Project</name>
+	<description>Catch all for various utilities for the SPRUCE-BEAM project</description>
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		
+		<!--                                                               -->
+		<!-- Consider inlining CSS to reduce the number of requested files -->
+		<!--                                                               -->
+		<link type="text/css" rel="stylesheet" href="/css/beam.css">
+		
+		<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+		<script type="text/javascript" src="/scripts/beam.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				getNavbar('coll-nav');
+				var collId = $.getUrlVar('collid');
+				$('#collid').val(collId);
+			});
+		</script>
+		<title>BEAM Web application</title>
+	</head>
+	<body>
+		<div id="container">
+			<div id="topbar">
+				<h1>Create A New Accession</h1>
+			</div>
+			<div id="navbar">
+			</div>
+			<div class="main">
+				<div class="spacer"></div>
+				<div id="stylized" class="beamform">
+					<form id="accform" action="/beam/services/accessions/add" method="POST" >
+						<h3>Enter the Accession Details</h3>
+						<p>All fields are mandatory</p>
+						<fieldset>
+							<legend>Accession Details</legend>
+							<label for="collid">Collection Id</label>
+							<input type="text" id="collid" name="collid" required disabled />
+							<label for="name">Name
+							<span class="small">Add accession name</span>
+							</label>
+							<input type="text" id="name" name="name" placeholder="Accession Name" maxlength="30" />
+							<label for="path">Path
+							<span class="small">Add accession path</span>
+							</label>
+							<input type="text" id="path" name="path" placeholder="Directory Path To Accession" required maxlength="255" />
+						</fieldset>
+						<button type="submit" class="out">Create Accession</button>
+					</form>
+				</div>
+				<div class="spacer"></div>
+			</div>
+		</div>
+	</body>
+</html>

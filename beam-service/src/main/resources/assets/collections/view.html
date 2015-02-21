@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!--                                                               -->
+<!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
+<link type="text/css" rel="stylesheet" href="/css/reset.css">
+<link type="text/css" rel="stylesheet" href="/css/text.css">
+<link type="text/css" rel="stylesheet" href="/css/960_12_col.css">
+<link type="text/css" rel="stylesheet" href="/css/beam.css">
+<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+<script type="text/javascript" src="/scripts/beam-common.js"></script>
+<script type="text/javascript" src="/scripts/beam-data.js"></script>
+<script type="text/javascript" src="/scripts/beam-collections.js"></script>
+<script type="text/javascript">
+	// When the doc is loaded, add click to the navbar
+	$(document).ready(function() {
+ 		setupOverlay();
+		// get the root param
+ 		var root = $.getUrlVar('root');
+ 		if (root == "new") {
+ 			// if it's a new collection just set up a basic form
+			$('#created').val(formatDate(new Date()));
+			$("#coll-form").submit(function(event) {createCollection(event);});
+			$('button').text("Create Collection").appendTo('#coll-form');
+ 		} else {
+ 	 		// It's an existing collection so let's get the JSON and dance
+ 	 		$.get('/beam/collections/' + root, function(collJson) {
+ 	 			// Display the collection details
+ 				displayCollection(collJson);
+ 	 			// And decide what to do with the accessions
+ 				assessAccessions(collJson);
+ 	 		}, "json").error(function() {
+ 	 			// We can't find the collection
+ 	 			alert("404: collection root:" + root + " not found");
+ 	 		});
+ 		}
+	});
+</script>
+
+<title>BEAM Web application</title>
+</head>
+<body>
+  <div id="header" class="container_12">
+    <h1>Beam Asset Management</h1>
+    <ul id="navbar">
+      <li><a id="home-nav" class="grid_2" href="/home.html"
+        title="An Overview of Functionality.">Home</a></li>
+      <li><a id="coll-nav" class="grid_2 select"
+        href="/collections/list.html"
+        title="Create and Manage BEAM Collections.">Collections</a></li>
+      <li><a id="man-nav" class="grid_2" href="/manifests/list.html"
+        title="Create and Manage BEAM Manifests.">Manifests</a></li>
+      <li><a id="tool-nav" class="grid_2" href="/tools/list.html"
+        title="Configure and Test BEAM Tools.">Tools</a></li>
+      <li><a id="conf-nav" class="grid_2" href="/configuration/list.html"
+        title="Configure the BEAM Application.">Configuration</a></li>
+      <li><a id="about-nav" class="grid_2" href="/about/list.html"
+        title="Application & Environment Information.">About</a></li>
+    </ul>
+  </div>
+  <div id="content" class="container_12">
+    <div class="clear"></div>
+    <div id="detail" class="grid_8 alpha">
+      <form id="coll-form" class="stylized">
+        <h3>Enter the New Collection Details</h3>
+        <p>All fields are mandatory.</p>
+        <fieldset>
+          <legend>Collection Details</legend>
+          <label for="name" class="grid_2">Name
+            <span class="small">Collection name</span>
+          </label>
+          <input type="text" id="name" class="grid_5" name="name" placeholder="Collection Name" required maxlength="30" />
+          <label for="title" class="grid_2">Title
+            <span class="small">Collection title</span>
+          </label>
+          <input  type="text" id="title" class="grid_5" name="title" placeholder="Collection Title" required maxlength="255" />
+          <label for="root" class="grid_2">Root Dir
+            <span class="small">Path to collection root</span>
+          </label>
+          <input  type="text" id="root" class="grid_5" name="root" placeholder="Path to Directory" required maxlength="255" />
+          <label for="created" class="grid_2">Date
+            <span class="small">Date collection created</span>
+          </label>
+          <input  type="text" id="created" class="grid_5" name="created" disabled placeholder="Date Created" required maxlength="255" />
+        </fieldset>
+      </form>
+    </div>
+    <div id="summary" class="grid_4 omega">
+      <h3>Creating a Collection</h3>
+      <ul>
+        <li>Name is free text.</li>
+        <li>As is title.</li>
+        <li>Root should be the path to a directory holding an existing collection.</li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" class="container_12"></div>
+  <div class="modal" id="prompt">
+    <div id="message" class="bord">
+      <h2>Collection Problem</h2>
+      <div class="spacer"></div>
+      <p></p>
+      <p>Click the Close button or hit ESC to close.</p>
+      <div class="spacer"></div>
+      <button class="close">Close</button>
+      <div class="spacer"></div>
+    </div>
+  </div>
+</body>
+</html>

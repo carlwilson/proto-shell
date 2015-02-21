@@ -1,0 +1,17 @@
+<div id="summary" class="grid_4 omega">
+  <h3>Accessions</h3>
+  <label>for: ${collection.name?html}</label>
+  <p>There are currently ${collection.accessions?size} accessions for this
+    collection.</p>
+  <ul class="stylized">
+    <#list collection.accessions as acc>
+    <li class="grid_4"
+      onclick="window.location='/beam/collections/${coll.name?url("UTF-8")}/accessions/${acc.details.name?url}';"}>
+      <label>${acc.details.name?html}</label>
+    </li> </#list>
+  </ul>
+  <p>You can manage the accessions for this collection, as well as scan for new accessions for this collection by clicking the button below.</p>
+  <div class="grid_2 prefix_1">
+    <a href="/beam/collections/${collection.name?url("UTF-8")}/accessions">Manage Accessions</a>
+  </div>
+</div>

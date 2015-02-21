@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>uk.ac.ox.bodleian.beam</groupId>
+    <artifactId>spruce-beam</artifactId>
+    <version>0.3.5-SNAPSHOT</version>
+  </parent>
+  <artifactId>beam-app</artifactId>
+  <name>BEAM Web Application</name>
+  <description>JETTY based web application for BEAM processing.</description>
+  <properties>
+    <jettyVersion>8.1.7.v20120910</jettyVersion>
+  </properties>
+   <build>
+    <plugins>
+      <plugin>
+        <!-- This plugin is needed for the servlet example -->
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>${jettyVersion}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution><goals><goal>java</goal></goals></execution>
+        </executions>
+        <configuration>
+          <mainClass>ac.uk.ox.bodleian.beam.BeamWebApplication</mainClass>
+        </configuration>
+      </plugin>
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<configuration>
+			<descriptorRefs>
+				<descriptorRef>jar-with-dependencies</descriptorRef>
+			</descriptorRefs>
+			<archive>
+				<manifest>
+					<addClasspath>true</addClasspath>
+					<mainClass>ac.uk.ox.bodleian.beam.BeamWebApplication</mainClass>
+					<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+					<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+				</manifest>
+			</archive>
+		</configuration>
+		<executions>
+			<execution>
+				<id>make-assembly</id> <!-- this is used for inheritance merges -->
+				<phase>package</phase> <!-- bind to the packaging phase -->
+				<goals>
+					<goal>single</goal>
+				</goals>
+			</execution>
+		</executions>
+	  </plugin>
+	  </plugins>
+</build>
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>${jettyVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>${jettyVersion}</version>
+    </dependency>
+    		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+    </dependencies>
+</project>

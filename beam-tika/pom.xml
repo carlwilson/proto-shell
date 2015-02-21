@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>uk.ac.ox.bodleian.beam</groupId>
+		<artifactId>spruce-beam</artifactId>
+		<version>0.3.5-SNAPSHOT</version>
+	</parent>
+	<artifactId>beam-tika</artifactId>
+	<name>Tika wrappers / extensions for BEAM processing.</name>
+	<description>Tika wrappers / extensions extensions developed for the SPRUCE funded BEAM processing project.  Some of these will be folded into a future version of Apache Tika.</description>
+	<dependencies>
+		<dependency>
+			<groupId>uk.ac.ox.bodleian.beam</groupId>
+			<artifactId>beam-filesystems</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.ac.ox.bodleian.beam</groupId>
+			<artifactId>beam-utilities</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers</artifactId>
+		</dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.2.2</version>
+    </dependency>
+	</dependencies>
+</project>

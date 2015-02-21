@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="/css/text.css">
+    <link type="text/css" rel="stylesheet" href="/css/960_12_col.css">
+    <link type="text/css" rel="stylesheet" href="/css/beam.css">
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="/scripts/beam-common.js"></script>
+    <script type="text/javascript" src="/scripts/beam-data.js"></script>
+    <script type="text/javascript">
+      // When the doc is loaded, add click to the navbar
+      $(document).ready(function() {
+        $('#navbar').find('a').click(selNavbarItem);
+      });
+    </script>
+    <title>BEAM Web application</title>
+  </head>
+  <body>
+    <div id="header" class="container_12">
+      <h1>Beam Asset Management</h1>
+      <ul id="navbar">
+        <li><a id="home-nav" class="grid_2" href="/home.html"
+          title="An Overview of Functionality.">Home</a></li>
+        <li><a id="coll-nav" class="grid_2" href="/collections/list.html" title="Create and Manage BEAM Collections.">Collections</a></li>
+        <li><a id="man-nav" class="grid_2" href="/manifests/list.html" title="Create and Manage BEAM Manifests.">Manifests</a></li>
+        <li><a id="tool-nav" class="grid_2 select" href="/tools/list.html" title="Configure and Test BEAM Tools.">Tools</a></li>
+        <li><a id="conf-nav" class="grid_2" href="/configuration/list.html" title="Configure the BEAM Application.">Configuration</a></li>
+        <li><a id="about-nav" class="grid_2" href="/about/list.html"
+          title="Application & Environment Information.">About</a></li>
+      </ul>
+    </div>
+    <div id="content" class="container_12">
+      <div class="clear"></div>
+      <div id="detail" class="grid_8 alpha">
+        <h3>Tools</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a quam viverra arcu mollis tempor quis id lacus. Vivamus ullamcorper vehicula fringilla. Duis ut orci arcu. Mauris dapibus massa ut magna ornare volutpat. Ut venenatis accumsan quam non venenatis. Praesent libero neque, posuere sed commodo sed, scelerisque nec lorem. Nulla viverra, augue quis porta porta, tellus leo fermentum lorem, sit amet feugiat lacus nulla eget metus. Phasellus dapibus sagittis velit, eu adipiscing urna interdum eu. In tempor felis nec tellus viverra fringilla. Pellentesque molestie viverra mauris id sodales. Aenean id leo vel nunc commodo sagittis. Maecenas eu dolor purus. Vivamus id dolor odio. Vestibulum rhoncus leo eu mauris imperdiet sed suscipit elit pharetra.</p>
+        <p>Fusce faucibus porta suscipit. Quisque tortor dui, consectetur lobortis aliquam quis, tincidunt et orci. Aenean sit amet augue quis arcu tincidunt venenatis. Fusce luctus tincidunt dui, nec faucibus felis pharetra at. Nunc eget orci augue, non feugiat quam. Etiam sem eros, mattis ac congue id, semper quis sem. Curabitur tincidunt consectetur ligula, eget fermentum quam tincidunt ut. Nulla egestas mattis mauris, et blandit purus tristique id. Nunc neque erat, aliquet ac interdum eu, pulvinar id mauris. Duis convallis vulputate purus, non pellentesque ante ornare sed. In molestie, nulla at volutpat malesuada, ligula massa vehicula mauris, nec lobortis purus nisl placerat augue. Fusce blandit ante sed quam ullamcorper et hendrerit ante convallis. Duis eleifend ligula vel dolor vulputate consequat. Ut non velit vel velit egestas volutpat at ac sem. In feugiat luctus arcu a facilisis. Aenean augue purus, gravida vitae eleifend congue, mattis et dui.</p>
+      </div>
+      <div id="summary" class="grid_4 omega">
+        <h3>Tool Summary</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a quam viverra arcu mollis tempor quis id lacus. Vivamus ullamcorper vehicula fringilla. Duis ut orci arcu. Mauris dapibus massa ut magna ornare volutpat. Ut venenatis accumsan quam non venenatis. Praesent libero neque, posuere sed commodo sed, scelerisque nec lorem. Nulla viverra, augue quis porta porta, tellus leo fermentum lorem, sit amet feugiat lacus nulla eget metus. Phasellus dapibus sagittis velit, eu adipiscing urna interdum eu. In tempor felis nec tellus viverra fringilla. Pellentesque molestie viverra mauris id sodales. Aenean id leo vel nunc commodo sagittis. Maecenas eu dolor purus. Vivamus id dolor odio. Vestibulum rhoncus leo eu mauris imperdiet sed suscipit elit pharetra.</p>
+      </div>
+    </div>
+    <div id="footer" class="container_12"></div>
+  </body>
+</html>
